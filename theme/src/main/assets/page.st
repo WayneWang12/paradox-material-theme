@@ -61,6 +61,16 @@ $!
     $ endif $
     <link rel="stylesheet" href="$page.base$lib/material__tabs/dist/mdc.tabs.min.css">
     <link rel="stylesheet" href="$page.base$lib/prettify/prettify.css">
+    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+    $ if(page.properties.("withAds")) $
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-4943945761370753",
+        enable_page_level_ads: true
+      });
+    $ endif $
+    </script>
     <script src="$page.base$assets/javascripts/modernizr.1aa3b519.js"></script>
     $ if (page.properties.("material.font.text")) $
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=$page.properties.("material.font.text.url")$:300,400,400i,700|$page.properties.("material.font.code.url")$">
@@ -129,6 +139,7 @@ $!
                 </span>
               </div>
             </article>
+            <div id="comments"></div>
           </div>
         </div>
       </main>
@@ -151,10 +162,28 @@ $!
     <script>app.initialize({version:"0.17",url:{base:"$page.base$."}})</script>
     <script type="text/javascript" src="$page.base$lib/prettify/prettify.js"></script>
     <script type="text/javascript" src="$page.base$lib/prettify/lang-scala.js"></script>
+    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
     <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", function(event) {
         window.prettyPrint && prettyPrint();
       });
+
+      $ if(page.properties.("withComments")) $
+        var clientId = 'baf13252e688e141e06b';
+        var clientSecret = '5046d2b88f2c31f848a8d8f855f0f25811ff64f4';
+        var gitment = new Gitment({
+            id: '$page.properties.("pageId")$',
+            owner: 'WayneWang12',
+            repo: 'WayneWang12.github.io',
+            oauth: {
+                client_id: clientId,
+                client_secret: clientSecret,
+            },
+        });
+
+        gitment.render('comments');
+    $ endif $
+
     </script>
     $ if (page.properties.("material.custom.javascript")) $
       <script src="$page.base$$page.properties.("material.custom.javascript")$"></script>
